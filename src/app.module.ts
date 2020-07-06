@@ -9,7 +9,7 @@ import { ThingsModule } from './things/things.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(DbConfig), ThingsModule],
-  controllers: [AppController, ThingsController],
-  providers: [AppService, ThingsService],
+  controllers: [ThingsController],
+  providers: [],
 })
 export class AppModule {}

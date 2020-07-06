@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as config from 'config';
 import { join } from 'path';
@@ -25,6 +25,12 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      validationError: { target: false },
+    }),
+  );
   const port = process.env.PORT || serverConfig.port;
   await app.listen(port);
   logger.log(`Application Listening on Port ${port} `);
