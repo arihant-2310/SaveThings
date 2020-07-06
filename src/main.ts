@@ -25,8 +25,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-  await app.listen(5009);
-  logger.log(`Application Listening on Port 5009 `);
+  const port = process.env.PORT || serverConfig.port;
+  await app.listen(port);
+  logger.log(`Application Listening on Port ${port} `);
   logger.log(`Api documentation avaliable at "/api/`);
 }
 bootstrap();
