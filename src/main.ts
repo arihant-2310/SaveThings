@@ -1,16 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import * as config from 'config';
+import { join } from 'path';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const logger = new Logger('SaveThings Root');
-  const app = await NestFactory.create(AppModule);
+  const serverConfig = config.get('server');
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   if (process.env.NODE_ENV === 'development') {
     app.enableCors();
   } else {
     app.enableCors({ origin: '*' });
   }
+  app.useStaticAssets(join(__dirname, '../../../public'));
+  // global.console.log('environment', process.env.NODE_ENV);
   const options = new DocumentBuilder()
     .setTitle('Save Now And Use Later')
     .setDescription('APIS')
