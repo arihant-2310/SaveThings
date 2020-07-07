@@ -51,14 +51,14 @@ export class ThingsRepository extends Repository<Things> {
       } else {
         return {
           statusCode: 400,
-          result: 'Things does not exists....',
+          error: 'No things are found....',
         };
       }
     } catch (err) {
       console.log(err);
       return {
         statusCode: 400,
-        result: 'Error retrieving stored things..',
+        error: 'Error retrieving stored things..',
       };
     }
   };
