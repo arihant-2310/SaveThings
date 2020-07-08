@@ -16,7 +16,7 @@ async function bootstrap() {
     app.enableCors({ origin: '*' });
   }
   app.useStaticAssets(join(__dirname, '../../../public'));
-  // global.console.log('environment', process.env.NODE_ENV);
+  global.console.log('environment', process.env.NODE_ENV);
   const options = new DocumentBuilder()
     .setTitle('Save Now And Use Later')
     .setDescription('APIS')
@@ -24,7 +24,7 @@ async function bootstrap() {
     .addTag('SaveThings')
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('doc', app, document);
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -34,6 +34,6 @@ async function bootstrap() {
   const port = process.env.PORT || serverConfig.port;
   await app.listen(port);
   logger.log(`Application Listening on Port ${port} `);
-  logger.log(`Api documentation avaliable at "/api/`);
+  logger.log(`Api documentation avaliable at "/doc/`);
 }
 bootstrap();
